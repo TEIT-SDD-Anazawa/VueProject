@@ -1,0 +1,21 @@
+/* Common error styles used across components */
+.error-list {
+  color: #b00020; /* material error color */
+  margin-right: 12px;
+  display: flex;
+  flex-direction: column;
+}
+.error-item {
+  font-size: 0.9rem;
+}
+.login-error {
+  color: #b00020;
+  margin-right: 12px;
+  align-self: center;
+}
+
+/* Utility: small red text for inline error */
+.text-error {
+  color: #b00020;
+  font-size: 0.9rem;
+}
