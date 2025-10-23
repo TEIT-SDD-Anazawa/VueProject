@@ -1,0 +1,56 @@
+[
+  {
+    "category": "ポケモン",
+    "questions": [
+      {
+        "questionId": 1,
+        "questionText": "ゴーストタイプに効果抜群の技はどれ？",
+        "options": [
+          { "id": 1, "optionText": "シャドーボール" },
+          { "id": 2, "optionText": "はっぱカッター" },
+          { "id": 3, "optionText": "ほのおのキバ" },
+          { "id": 4, "optionText": "しんそく" }
+        ],
+        "answer": 1
+      },
+      {
+        "questionId": 2,
+        "questionText": "ピカチュウの進化形はどれ？",
+        "options": [
+          { "id": 1, "optionText": "ライチュウ" },
+          { "id": 2, "optionText": "イーブイ" },
+          { "id": 3, "optionText": "フシギダネ" },
+          { "id": 4, "optionText": "プリン" }
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "category": "ITパスポート",
+    "questions": [
+      {
+        "questionId": 1,
+        "questionText": "USB3.0の説明として、適切なものはどれか。",
+        "options": [
+          { "id": 1, "optionText": "1クロックで2ビットのデータ伝送を行う。" },
+          { "id": 2, "optionText": "PCと周辺機器とを接続する規格である。" },
+          { "id": 3, "optionText": "音声、映像などに適したインターフェースである。" },
+          { "id": 4, "optionText": "スーパースピードと呼ばれる転送方式を採用している。" }
+        ],
+        "answer": 4
+      },
+      {
+        "questionId": 2,
+        "questionText": "ファイアウォールの主な機能はどれか。",
+        "options": [
+          { "id": 1, "optionText": "コンピューターグラフィックスの性能向上。" },
+          { "id": 2, "optionText": "ネットワーク経由での不正アクセスの遮断。" },
+          { "id": 3, "optionText": "バックアップデータの保存。" },
+          { "id": 4, "optionText": "ディスク容量の増加。" }
+        ],
+        "answer": 2
+      }
+    ]
+  }
+]

@@ -1,5 +1,6 @@
 import { ref as vueRef } from "vue";
 import users from "@/models/tempUser.json";
+import quizzes from "@/models/tempQuiz.json";
 
 function fetchUser(
   userAddress?: string
@@ -121,3 +122,22 @@ export function getUser() {
 export const showLoginDialog = vueRef(false);
 
 export { fetchUser };
+
+// --- quiz dummy APIs ---
+export async function fetchQuizzes() {
+  // simulate latency
+  await delay(300);
+  // return a deep copy to avoid accidental mutation by consumers
+  return JSON.parse(JSON.stringify(quizzes));
+}
+
+export async function fetchQuizByCategory(category: string) {
+  await delay(200);
+  const found = (quizzes as any[]).find((q) => q.category === category);
+  return found ? JSON.parse(JSON.stringify(found)) : null;
+}
+
+export async function fetchQuizQuestions(category: string) {
+  const quiz = await fetchQuizByCategory(category);
+  return quiz ? quiz.questions : [];
+}

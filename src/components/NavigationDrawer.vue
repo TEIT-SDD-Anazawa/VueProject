@@ -35,6 +35,16 @@
         @click="select('/about')"
       />
 
+      <!-- クイズ -->
+      <v-list-item
+        append-icon="mdi-chevron-right"
+        class="nav-item"
+        link
+        prepend-icon="mdi-help-circle-outline"
+        title="Quiz"
+        @click="select('/quiz')"
+      />
+
       <!-- 設定 -->
       <v-list-item
         v-if="isAuth"

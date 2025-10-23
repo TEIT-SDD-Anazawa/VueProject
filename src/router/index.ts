@@ -4,10 +4,12 @@ import { isAuthenticated } from '@/api/dummyApi'
 const Home = () => import('@/pages/Home.vue')
 const About = () => import('@/pages/About.vue')
 const Settings = () => import('@/pages/Settings.vue')
+const Quiz = () => import('@/pages/Quiz.vue')
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
   { path: '/about', name: 'About', component: About },
+  { path: '/quiz', name: 'Quiz', component: Quiz },
   { path: '/settings', name: 'Settings', component: Settings, meta: { requiresAuth: true } }
 ]
 
