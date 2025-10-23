@@ -1,0 +1,1 @@
+import{_ as t,c as a,o as s,w as r,a as o,r as c}from"./index-BPrIJtq4.js";const _={};function l(p,e){const n=c("v-container");return s(),a(n,{class:"pa-4"},{default:r(()=>[...e[0]||(e[0]=[o("h2",null,"アバウト",-1),o("p",null,"ここはアバウトページです。",-1)])]),_:1})}const u=t(_,[["render",l]]);export{u as default};
