@@ -145,7 +145,10 @@ const passwordRules = computed(() => [
       return true;
     } else {
       // バリデーション失敗時はエラー
-      return res.reasons;
+      const resString = Array.isArray(res.reasons)
+        ? res.reasons.join("\n")
+        : res.reasons;
+      return resString;
     }
   },
 ]);

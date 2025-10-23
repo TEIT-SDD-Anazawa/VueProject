@@ -47,7 +47,6 @@
 
 <script setup lang="ts">
 import { ref, watch, computed } from "vue";
-import { validatePassword } from "@/utils/validation";
 import { login } from "@/api/dummyApi";
 
 interface Props {
@@ -107,12 +106,11 @@ const passwordRules = computed(() => {
         // エラー表示のフラグが立っていないならエラーなし
         return true;
       }
-      const res = validatePassword(v);
-      if (res.valid) {
+      if (v && v.trim().length > 0) {
         return true;
       } else {
-        // バリデーション失敗時はエラー
-        return res.reasons;
+        // 入力値がないならエラー
+        return "パスワードを入力してください";
       }
     },
   ];
@@ -126,19 +124,12 @@ const show = computed({
 
 /**
  * ログインボタンを押下可能か確認する
- * - 押下可能となる条件
- * 1. ユーザーIDとパスワードが入力済み
- * 2. バリデーションエラーがない
+ * - 押下可能条件：ユーザーIDとパスワードが入力済み
  */
 const canSubmit = computed(() => {
-  // 1. ユーザーIDとパスワードが入力済み
-  const isEmpty =
-    userId.value.trim().length === 0 && password.value.trim().length === 0;
-  // 2. バリデーションエラーがない
-  const isValid =
-    !userIdRules.value[0](userId.value) &&
-    !passwordRules.value[0](password.value);
-  return isEmpty && isValid;
+  const filled =
+    userId.value.trim().length > 0 && password.value.trim().length > 0;
+  return filled;
 });
 
 // Watch

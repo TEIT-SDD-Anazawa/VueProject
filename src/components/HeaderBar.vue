@@ -40,6 +40,8 @@
     @login-success="$emit('login-success')"
     @open-signup="showSignupLocal = true"
   />
+  <!-- サインアップダイアログ -->
+  <SignupDialog v-model="showSignupLocal" @signup-success="showSignupLocal = false" />
 </template>
 
 <script setup lang="ts">
@@ -67,11 +69,18 @@ const emit = defineEmits<Emits>();
 /** ログインダイアログの表示状態 */
 const showDialogLocal = ref(props.showDialog);
 
+/** サインアップダイアログの表示状態 */
+const showSignupLocal = ref(false);
+
 /** ログインダイアログの表示状態を更新する */
 watch(
   () => props.showDialog,
   (v) => (showDialogLocal.value = v)
 );
+
+/** props.showDialog の変更を親へ通知する */
+watch(showSignupLocal, (v) => {
+});
 
 /** ログインダイアログの表示状態を親コンポーネントに通知する */
 watch(showDialogLocal, (v) => emit("update:showDialog", v));
