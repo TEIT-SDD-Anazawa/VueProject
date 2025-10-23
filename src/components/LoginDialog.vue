@@ -27,7 +27,7 @@
 
       <!-- 実行ボタン -->
       <v-card-actions>
-        <v-btn variant="outlined" @click="$emit('open-signup')">
+        <v-btn color="primary" variant="outlined" @click="$emit('open-signup')">
           アカウント登録
         </v-btn>
         <v-spacer />
@@ -35,7 +35,7 @@
         <v-btn
           color="primary"
           :disabled="!canSubmit"
-          variant="contained"
+          variant="flat"
           @click="submit"
         >
           ログイン
@@ -124,16 +124,21 @@ const show = computed({
   set: (v: boolean) => emit("update:modelValue", v),
 });
 
-/** 
+/**
  * ログインボタンを押下可能か確認する
- * ## 押下可能となる条件
+ * - 押下可能となる条件
  * 1. ユーザーIDとパスワードが入力済み
  * 2. バリデーションエラーがない
  */
 const canSubmit = computed(() => {
-  const result =
-    userId.value.trim().length > 0 && password.value.trim().length > 0;
-  return result;
+  // 1. ユーザーIDとパスワードが入力済み
+  const isEmpty =
+    userId.value.trim().length === 0 && password.value.trim().length === 0;
+  // 2. バリデーションエラーがない
+  const isValid =
+    !userIdRules.value[0](userId.value) &&
+    !passwordRules.value[0](password.value);
+  return isEmpty && isValid;
 });
 
 // Watch
@@ -149,9 +154,9 @@ watch(show, (v) => {
     // ダイアログを閉じた時
     userId.value = "";
     password.value = "";
-    submitErrorMessage.value = "";
     userIdTouched.value = false;
     passwordTouched.value = false;
+    submitErrorMessage.value = "";
   }
 });
 
