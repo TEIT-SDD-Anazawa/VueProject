@@ -5,11 +5,11 @@
     <HeaderBar
       :auth="auth"
       :user="user"
-      :showDialog="showDialog"
+      :showLoginDialog="showLoginDialog"
       @toggle-drawer="drawer = !drawer"
       @logout="logoutUser"
-      @open-login="showDialog = true"
-      @update:showDialog="updateShowDialog"
+      @open-login="showLoginDialog = true"
+      @update:showLoginDialog="updateShowLoginDialog"
       @login-success="onLoginSuccess"
     />
 
@@ -22,7 +22,12 @@
 <script setup lang="ts">
 import { ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
-import { isAuthenticated, logout, getUser, showLoginDialog } from "@/api/dummyApi";
+import {
+  isAuthenticated,
+  logout,
+  getUser,
+  showLoginDialog as sharedShowLoginDialog,
+} from "@/api/dummyApi";
 import NavigationDrawer from "@/components/NavigationDrawer.vue";
 import HeaderBar from "@/components/HeaderBar.vue";
 
@@ -35,16 +40,16 @@ const goAndClose = (path: string) => {
 };
 const auth = computed(() => isAuthenticated());
 const user = getUser();
-const showDialog = ref(false);
-const updateShowDialog = (v: boolean) => (showDialog.value = v);
+const showLoginDialog = ref(false);
+const updateShowLoginDialog = (v: boolean) => (showLoginDialog.value = v);
 // sync with shared auth flag
-watch(showLoginDialog, (v) => (showDialog.value = v));
-watch(showDialog, (v) => (showLoginDialog.value = v));
+watch(sharedShowLoginDialog, (v) => (showLoginDialog.value = v));
+watch(showLoginDialog, (v) => (sharedShowLoginDialog.value = v));
 
 const logoutUser = () => {
   logout();
   // after logout, navigate to home
-  router.push('/').catch(() => {});
+  router.push("/").catch(() => {});
 };
 
 const onLoginSuccess = () => {

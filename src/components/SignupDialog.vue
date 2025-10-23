@@ -5,58 +5,82 @@
       <v-card-title>アカウント登録</v-card-title>
 
       <!-- 入力欄 -->
-      <v-card-text>
-        <v-text-field
-          v-model="userId"
-          label="ユーザーID"
-          :rules="userIdRules"
-          @blur="onUserIdBlur"
-        />
-        <v-text-field
-          v-model="displayName"
-          label="表示名"
-          :rules="displayNameRules"
-          @blur="onDisplayNameBlur"
-        />
-        <v-text-field
-          v-model="password"
-          label="パスワード"
-          type="password"
-          :rules="passwordRules"
-          @blur="onPasswordBlur"
-        />
-        <v-text-field
-          v-model="passwordConfirm"
-          label="パスワード（確認）"
-          type="password"
-          :rules="passwordConfirmRules"
-          @blur="onPasswordConfirmBlur"
-        />
-        <!-- エラー表示 -->
-        <div v-if="submitErrorMessages.length" class="error-list">
-          <div
-            v-for="(m, i) in submitErrorMessages"
-            :key="i"
-            class="error-item"
-          >
-            {{ m }}
+      <template v-if="!signupSucceeded">
+        <v-card-text>
+          <v-text-field
+            v-model="userId"
+            label="ユーザーID"
+            :rules="userIdRules"
+            @blur="onUserIdBlur"
+          />
+          <v-text-field
+            v-model="displayName"
+            label="表示名"
+            :rules="displayNameRules"
+            @blur="onDisplayNameBlur"
+          />
+          <v-text-field
+            v-model="password"
+            label="パスワード"
+            type="password"
+            :rules="passwordRules"
+            @blur="onPasswordBlur"
+          />
+          <v-text-field
+            v-model="passwordConfirm"
+            label="パスワード（確認）"
+            type="password"
+            :rules="passwordConfirmRules"
+            @blur="onPasswordConfirmBlur"
+          />
+          <!-- エラー表示 -->
+          <div v-if="submitErrorMessages.length" class="error-list">
+            <div
+              v-for="(m, i) in submitErrorMessages"
+              :key="i"
+              class="error-item"
+            >
+              {{ m }}
+            </div>
           </div>
-        </div>
-      </v-card-text>
+        </v-card-text>
 
-      <!-- 実行ボタン -->
-      <v-card-actions>
-        <v-spacer />
-        <v-btn variant="outlined" @click="close">キャンセル</v-btn>
-        <v-btn
-          color="primary"
-          :disabled="!canSubmit"
-          variant="flat"
-          @click="submit"
-        >
-          登録
-        </v-btn>
-      </v-card-actions>
+        <!-- 実行ボタン -->
+        <v-card-actions>
+          <v-btn size="x-small" variant="text" @click="openLogin">
+            アカウント作成済みの場合<span class="text-blue">【ログイン】</span>
+          </v-btn>
+          <v-spacer />
+          <v-btn class="mr-2" variant="outlined" @click="close">
+            キャンセル
+          </v-btn>
+          <v-btn
+            color="primary"
+            :disabled="!canSubmit"
+            variant="flat"
+            @click="submit"
+          >
+            登録
+          </v-btn>
+        </v-card-actions>
+      </template>
+
+      <!-- 成功表示 -->
+      <template v-else>
+        <v-card-text>
+          <v-card-title class="text-center">登録が完了しました</v-card-title>
+          <p class="text-center">アカウントの作成に成功しました。</p>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn variant="outlined" @click="onSuccessClose">閉じる</v-btn>
+          <v-btn variant="text" @click="openLogin">ログイン</v-btn>
+        </v-card-actions>
+      </template>
+      <!-- ローディングオーバーレイ -->
+      <v-overlay :model-value="loading" :z-index="2500">
+        <v-progress-circular indeterminate size="64" color="primary" />
+      </v-overlay>
     </v-card>
   </v-dialog>
 </template>
@@ -64,6 +88,7 @@
 <script setup lang="ts">
 import { ref, watch, computed } from "vue";
 import { createUser } from "@/api/dummyApi";
+import { withLoading } from "@/utils/loading";
 import { validatePassword } from "@/utils/validation";
 
 interface Props {
@@ -76,6 +101,8 @@ type Emits = {
   (e: "update:modelValue", v: boolean): void;
   /** ユーザー登録成功時の処理 */
   (e: "signup-success"): void;
+  /** ログインダイアログを開く要求 */
+  (e: "open-login"): void;
 };
 
 const props = defineProps<Props>();
@@ -87,6 +114,9 @@ const userId = ref("");
 const displayName = ref("");
 const password = ref("");
 const passwordConfirm = ref("");
+
+const signupSucceeded = ref(false);
+const loading = ref(false);
 
 /** フォーム送信時のエラーメッセージ */
 const submitErrorMessages = ref<string[]>([]);
@@ -208,15 +238,13 @@ watch(show, (v) => {
     passwordConfirmTouched.value = false;
   } else {
     // ダイアログを閉じたとき
-    userId.value = "";
-    displayName.value = "";
-    password.value = "";
-    passwordConfirm.value = "";
-    submitErrorMessages.value = [];
-    userIdTouched.value = false;
-    displayNameTouched.value = false;
-    passwordTouched.value = false;
-    passwordConfirmTouched.value = false;
+    // フォームを初期化
+    resetForm();
+    // ダイアログの閉じアニメーションが終わるまで成功フラグを残すことで
+    // 成功表示からフォームへ切り替わる際のちらつきを防ぐ
+    setTimeout(() => {
+      signupSucceeded.value = false;
+    }, 300);
   }
 });
 
@@ -240,20 +268,54 @@ const close = () => emit("update:modelValue", false);
  * - 失敗時はダイアログは開いたままエラーメッセージを表示する
  */
 const submit = async () => {
-  // ユーザー作成処理
-  const res = await createUser({
-    username: userId.value,
-    password: password.value,
-    name: displayName.value,
-  });
+  // ユーザー作成処理（ローディングを表示）
+  const res = await withLoading(loading, () =>
+    createUser({
+      username: userId.value,
+      password: password.value,
+      name: displayName.value,
+    })
+  );
   if (res.success) {
     // 作成成功
-    emit("signup-success");
-    close();
+    // フォーム全体を初期化
+    resetForm();
+    signupSucceeded.value = true;
   } else {
     // 作成失敗
     submitErrorMessages.value = [];
     submitErrorMessages.value.push(res.message || "作成に失敗しました");
+    // 失敗したらパスワード欄のみリセット
+    password.value = "";
+    passwordConfirm.value = "";
+    passwordTouched.value = false;
+    passwordConfirmTouched.value = false;
   }
+};
+
+/** フォームを初期化 */
+const resetForm = () => {
+  userId.value = "";
+  displayName.value = "";
+  password.value = "";
+  passwordConfirm.value = "";
+  submitErrorMessages.value = [];
+  userIdTouched.value = false;
+  displayNameTouched.value = false;
+  passwordTouched.value = false;
+  passwordConfirmTouched.value = false;
+};
+
+const onSuccessClose = () => {
+  // 成功ポップアップの閉じるを押したらダイアログを閉じ、親に成功を伝える
+  emit("signup-success");
+  close();
+};
+
+/** サインアップダイアログからログインダイアログを開く */
+const openLogin = () => {
+  // 先にこのダイアログを閉じて、親へログインを開く合図を送る
+  close();
+  emit("open-login");
 };
 </script>

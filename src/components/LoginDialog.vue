@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="show" max-width="400" persistent>
+  <v-dialog v-model="show" max-width="500" persistent>
     <v-card>
       <!-- ヘッダー -->
       <v-card-title>ログイン</v-card-title>
@@ -27,11 +27,11 @@
 
       <!-- 実行ボタン -->
       <v-card-actions>
-        <v-btn color="primary" variant="outlined" @click="$emit('open-signup')">
-          アカウント登録
+        <v-btn size="x-small" variant="text" @click="$emit('open-signup')">
+          アカウント登録は<span class="text-blue">【こちら】</span>
         </v-btn>
         <v-spacer />
-        <v-btn variant="outlined" @click="close">キャンセル</v-btn>
+        <v-btn class="mr-2" variant="outlined" @click="close">キャンセル</v-btn>
         <v-btn
           color="primary"
           :disabled="!canSubmit"
@@ -41,6 +41,17 @@
           ログイン
         </v-btn>
       </v-card-actions>
+
+      <!-- ローディングオーバーレイ -->
+      <v-overlay
+        contained
+        scrim
+        :model-value="loading"
+        :z-index="2500"
+        class="login-overlay"
+      >
+        <v-progress-circular indeterminate size="48" color="primary" />
+      </v-overlay>
     </v-card>
   </v-dialog>
 </template>
@@ -48,6 +59,7 @@
 <script setup lang="ts">
 import { ref, watch, computed } from "vue";
 import { login } from "@/api/dummyApi";
+import { withLoading } from "@/utils/loading";
 
 interface Props {
   /** ダイアログの表示非表示 */
@@ -70,6 +82,7 @@ const emit = defineEmits<Emits>();
 // ==============================================================
 const userId = ref("");
 const password = ref("");
+const loading = ref(false);
 
 /** フォーム送信時のエラーメッセージ */
 const submitErrorMessage = ref("");
@@ -173,7 +186,9 @@ const onPasswordBlur = () => {
  */
 const submit = async () => {
   // ログイン認証
-  const res = await login(userId.value, password.value);
+  const res = await withLoading(loading, () =>
+    login(userId.value, password.value)
+  );
   if (res.success) {
     // 認証成功
     submitErrorMessage.value = "";

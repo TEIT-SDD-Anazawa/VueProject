@@ -1,12 +1,12 @@
 <template>
-  <v-app-bar app>
+  <v-app-bar app class="pl-2 pr-2">
     <!-- サイドバーの開閉ボタン -->
     <v-btn @click="$emit('toggle-drawer')" icon>
       <v-icon icon="mdi-menu" />
     </v-btn>
 
     <!-- タイトル -->
-    <v-app-bar-title>サンプルアプリ</v-app-bar-title>
+    <v-app-bar-title>勉強アプリ</v-app-bar-title>
     <v-spacer />
 
     <!-- ログイン/ログアウトボタン -->
@@ -36,12 +36,16 @@
 
   <!-- ログインダイアログ -->
   <LoginDialog
-    v-model="showDialogLocal"
+    v-model="showLoginDialogLocal"
     @login-success="$emit('login-success')"
-    @open-signup="showSignupLocal = true"
+    @open-signup="openSignupFromLogin"
   />
   <!-- サインアップダイアログ -->
-  <SignupDialog v-model="showSignupLocal" @signup-success="showSignupLocal = false" />
+  <SignupDialog
+    v-model="showSignupDialogLocal"
+    @signup-success="showSignupDialogLocal = false"
+    @open-login="openLoginFromSignup"
+  />
 </template>
 
 <script setup lang="ts">
@@ -52,11 +56,11 @@ import SignupDialog from "@/components/SignupDialog.vue";
 interface Props {
   auth: boolean;
   user?: { username?: string; name?: string };
-  showDialog: boolean;
+  showLoginDialog: boolean;
 }
 
 type Emits = {
-  (e: "update:showDialog", v: boolean): void;
+  (e: "update:showLoginDialog", v: boolean): void;
   (e: "toggle-drawer"): void;
   (e: "logout"): void;
   (e: "open-login"): void;
@@ -67,21 +71,40 @@ const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
 /** ログインダイアログの表示状態 */
-const showDialogLocal = ref(props.showDialog);
+const showLoginDialogLocal = ref(props.showLoginDialog);
 
 /** サインアップダイアログの表示状態 */
-const showSignupLocal = ref(false);
+const showSignupDialogLocal = ref(false);
 
 /** ログインダイアログの表示状態を更新する */
 watch(
-  () => props.showDialog,
-  (v) => (showDialogLocal.value = v)
+  () => props.showLoginDialog,
+  (v) => (showLoginDialogLocal.value = v)
 );
 
 /** props.showDialog の変更を親へ通知する */
-watch(showSignupLocal, (v) => {
-});
+watch(showSignupDialogLocal, (v) => {});
 
 /** ログインダイアログの表示状態を親コンポーネントに通知する */
-watch(showDialogLocal, (v) => emit("update:showDialog", v));
+watch(showLoginDialogLocal, (v) => emit("update:showLoginDialog", v));
+
+/**
+ * emitを受けてダイアログ開閉を行う
+ * 1. ログインダイアログを閉じる
+ * 2. サインアップダイアログを開く
+ */
+const openSignupFromLogin = () => {
+  showLoginDialogLocal.value = false;
+  showSignupDialogLocal.value = true;
+};
+
+/**
+ * emitを受けてダイアログ開閉を行う
+ * 1. サインアップダイアログを閉じる
+ * 2. ログインダイアログを開く
+ */
+const openLoginFromSignup = () => {
+  showSignupDialogLocal.value = false;
+  showLoginDialogLocal.value = true;
+};
 </script>
