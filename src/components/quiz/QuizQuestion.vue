@@ -19,12 +19,21 @@
           </v-list-item>
         </v-list>
 
-        <div style="margin-top:12px">
-          <v-btn color="primary" :disabled="selectedOption === null || showResult" @click="submitAnswer">回答する</v-btn>
+        <div style="margin-top: 12px">
+          <v-btn
+            color="primary"
+            :disabled="selectedOption === null || showResult"
+            @click="submitAnswer"
+            >回答する</v-btn
+          >
         </div>
 
-        <div v-if="showResult" style="margin-top:12px">
-          <QuizAnswerResult :correct="lastCorrect" :correctText="lastCorrectText" @next="nextQuestion" />
+        <div v-if="showResult" style="margin-top: 12px">
+          <QuizAnswer
+            :correct="lastCorrect"
+            :correctText="lastCorrectText"
+            @next="nextQuestion"
+          />
         </div>
       </div>
       <div v-else>
@@ -36,77 +45,103 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue'
-import QuizAnswerResult from '@/components/quiz/QuizAnswerResult.vue'
-import { fetchQuizQuestions } from '@/api/dummyApi'
+import { ref, computed, onMounted } from "vue";
+import QuizAnswer from "@/components/quiz/QuizAnswer.vue";
+import { fetchQuizQuestions } from "@/api/dummyApi";
 
-interface Option { id: number; optionText: string }
-interface Question { questionId: number; questionText: string; options: Option[]; answer: number }
+interface Option {
+  id: number;
+  optionText: string;
+}
+interface Question {
+  questionId: number;
+  questionText: string;
+  options: Option[];
+  answer: number;
+}
 
-const props = defineProps<{ category: string; numQuestions: number; retryQuestionId?: number }>()
+const props = defineProps<{
+  category: string;
+  numQuestions: number;
+  retryQuestionId?: number;
+}>();
 const emit = defineEmits<{
-  (e: 'finish', payload: { correctCount: number; total: number; mistakes: any[]; answered: any[] }): void
-  (e: 'home'): void
-}>()
+  (
+    e: "finish",
+    payload: {
+      correctCount: number;
+      total: number;
+      mistakes: any[];
+      answered: any[];
+    }
+  ): void;
+  (e: "home"): void;
+}>();
 
-const loading = ref(true)
-const questions = ref<Question[]>([])
-const currentIndex = ref(0)
+const loading = ref(true);
+const questions = ref<Question[]>([]);
+const currentIndex = ref(0);
 
-const selectedOption = ref<number | null>(null)
-const showResult = ref(false)
-const lastCorrect = ref(false)
-const lastCorrectText = ref('')
+const selectedOption = ref<number | null>(null);
+const showResult = ref(false);
+const lastCorrect = ref(false);
+const lastCorrectText = ref("");
 
-const answered = ref<Array<{ q: Question; selected: number; correct: boolean }>>([])
+const answered = ref<
+  Array<{ q: Question; selected: number; correct: boolean }>
+>([]);
 
-const current = computed(() => questions.value[currentIndex.value])
+const current = computed(() => questions.value[currentIndex.value]);
 
 onMounted(async () => {
-  loading.value = true
-  const qs = await fetchQuizQuestions(props.category)
+  loading.value = true;
+  const qs = await fetchQuizQuestions(props.category);
   // slice to requested number
-  questions.value = qs.slice(0, props.numQuestions)
+  questions.value = qs.slice(0, props.numQuestions);
   // if retryQuestionId provided, find index
   if (props.retryQuestionId !== undefined) {
-    const idx = questions.value.findIndex((q) => q.questionId === props.retryQuestionId)
-    if (idx !== -1) currentIndex.value = idx
+    const idx = questions.value.findIndex(
+      (q) => q.questionId === props.retryQuestionId
+    );
+    if (idx !== -1) currentIndex.value = idx;
   }
-  loading.value = false
-})
+  loading.value = false;
+});
 
 const toggleSelect = (id: number) => {
-  if (showResult.value) return
-  if (selectedOption.value === id) selectedOption.value = null
-  else selectedOption.value = id
-}
+  if (showResult.value) return;
+  if (selectedOption.value === id) selectedOption.value = null;
+  else selectedOption.value = id;
+};
 
 const submitAnswer = () => {
-  if (selectedOption.value === null) return
-  const id = selectedOption.value
-  const correct = current.value.answer === id
-  lastCorrect.value = correct
-  const correctOption = current.value.options.find((o) => o.id === current.value.answer)
-  lastCorrectText.value = correctOption ? correctOption.optionText : ''
-  answered.value.push({ q: current.value, selected: id, correct })
-  showResult.value = true
-}
+  if (selectedOption.value === null) return;
+  const id = selectedOption.value;
+  const correct = current.value.answer === id;
+  lastCorrect.value = correct;
+  const correctOption = current.value.options.find(
+    (o) => o.id === current.value.answer
+  );
+  lastCorrectText.value = correctOption ? correctOption.optionText : "";
+  answered.value.push({ q: current.value, selected: id, correct });
+  showResult.value = true;
+};
 
 const nextQuestion = () => {
-  showResult.value = false
-  selectedOption.value = null
-  currentIndex.value += 1
-}
+  showResult.value = false;
+  selectedOption.value = null;
+  currentIndex.value += 1;
+};
 
 const emitFinish = () => {
-  const correctCount = answered.value.filter((a) => a.correct).length
-  emit('finish', {
+  const correctCount = answered.value.filter((a) => a.correct).length;
+  emit("finish", {
     correctCount,
     total: questions.value.length,
     mistakes: answered.value.filter((a) => !a.correct),
     answered: answered.value,
-  })
-}
+  });
+};
 </script>
 
 <style scoped>
