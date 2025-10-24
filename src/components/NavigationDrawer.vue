@@ -42,18 +42,17 @@
         link
         prepend-icon="mdi-help-circle-outline"
         title="Quiz"
-        @click="select('/quiz')"
+        @click="selectWithAuth('/quiz')"
       />
 
       <!-- 設定 -->
       <v-list-item
-        v-if="isAuth"
         append-icon="mdi-chevron-right"
         class="nav-item"
         link
         prepend-icon="mdi-cog-outline"
         title="設定"
-        @click="select('/settings')"
+        @click="selectWithAuth('/settings')"
       />
     </v-list>
   </v-navigation-drawer>
@@ -62,7 +61,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useRouter } from "vue-router";
-import { isAuthenticated } from "@/api/dummyApi";
+import { isAuthenticated, showLoginDialog } from "@/api/dummyApi";
 
 interface Props {
   modelValue: boolean;
@@ -90,6 +89,16 @@ const internal = computed({
 const select = (path: string) => {
   internal.value = false;
   router.push(path).catch(() => {});
+};
+
+/** 未ログインならログインダイアログを表示する */
+const selectWithAuth = (path: string) => {
+  if (!isAuth.value) {
+    showLoginDialog.value = true;
+    internal.value = false;
+    return;
+  }
+  select(path);
 };
 
 /** ナビゲーションバーを閉じる */
