@@ -1,7 +1,5 @@
 import { defineStore } from "pinia";
-// ↓↓↓↓↓↓ TODO ↓↓↓↓↓↓
-import { logout as apiLogout } from "@/api/dummyApi";
-// ↑↑↑↑↑↑ TODO ↑↑↑↑↑↑
+import * as userApi from "@/api/userApi";
 
 interface User {
   id: string;
@@ -13,16 +11,21 @@ export const useUserStore = defineStore("user", {
     user: null as User | null,
   }),
   actions: {
+    async login(userid: string, password: string) {
+      const res = await userApi.login(userid, password);
+      if (res && res.success && res.user) {
+        this.user = res.user as any;
+      }
+      return res;
+    },
     async setUser(user: User) {
       this.user = user;
     },
     logout() {
       this.user = null;
-      // ↓↓↓↓↓↓ TODO ↓↓↓↓↓↓
       try {
-        apiLogout();
+        userApi.logout();
       } catch (e) {}
-      // ↑↑↑↑↑↑ TODO ↑↑↑↑↑↑
     },
   },
   getters: {

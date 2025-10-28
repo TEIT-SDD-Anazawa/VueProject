@@ -32,7 +32,7 @@ import { ref, onMounted } from 'vue'
 const emit = defineEmits<{
   (e: 'start', payload: { category: string; numQuestions: number }): void
 }>()
-import { fetchQuizzes } from '@/api/dummyApi'
+import { fetchQuizzes } from '@/api/quizApi'
 
 const selectedCategory = ref<string | null>(null)
 const numQuestions = ref<number>(5)

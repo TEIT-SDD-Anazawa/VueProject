@@ -34,16 +34,16 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { getUser, updateUser } from '@/api/dummyApi'
+import { useUserStore } from '@/stores/userStore'
 import { validatePassword } from '@/utils/validation'
 
 const name = ref('')
 const password = ref('')
 
-// initialize name from current user if available
-const currentUser = getUser()
-if (currentUser && currentUser.value) {
-  name.value = currentUser.value.name || ''
+// initialize name from current user in store
+const userStore = useUserStore()
+if (userStore.user) {
+  name.value = (userStore.user as any).name || ''
 }
 // no theme reactive logic anymore; app stays on light theme
 
@@ -58,9 +58,16 @@ const saveUser = async () => {
       return
     }
   }
-  // use the stored user id; fall back to 'alice' for demo
-  const userid = currentUser && currentUser.value ? (currentUser.value as any).id || 'alice' : 'alice'
-  await updateUser(userid, { name: name.value, password: password.value || undefined })
+  // use the stored user id from store; fall back to 'alice' for demo
+  const userid = userStore.user ? (userStore.user as any).id || 'alice' : 'alice'
+  await userStore.login(userid, password.value).then(() => {
+    // after updating password via userApi, update name via updateUser wrapper
+    // call userApi.updateUser through store or directly (we'll use userApi via store action setUser)
+    // For now, call userApi directly to update name
+  })
+  // call update via userApi (we kept updateUser in userApi)
+  const userApi = await import('@/api/userApi')
+  await userApi.updateUser(userid, { name: name.value, password: password.value || undefined })
   password.value = ''
   // optionally show a notification
 }

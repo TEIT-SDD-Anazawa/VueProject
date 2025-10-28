@@ -22,11 +22,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
-import {
-  isAuthenticated,
-  showLoginDialog as sharedShowLoginDialog,
-  getUser,
-} from "@/api/dummyApi";
+import { showLoginDialog as sharedShowLoginDialog } from "@/api/userApi";
 import { useUserStore } from "@/stores/userStore";
 import NavigationDrawer from "@/components/NavigationDrawer.vue";
 import HeaderBar from "@/components/HeaderBar.vue";
@@ -40,14 +36,10 @@ const userStore = useUserStore();
 const drawer = ref(false);
 /** ログインダイアログの表示非表示 */
 const showLoginDialog = ref(false);
-const apiUserRef = getUser();
-
 // Computed
 // ==============================================================
-const auth = computed(() => isAuthenticated());
-const user = computed(() => apiUserRef.value as
-  | { username?: string; name?: string }
-  | null);
+const auth = computed(() => !!userStore.user);
+const user = computed(() => userStore.user as { username?: string; name?: string } | null);
 
 // Watch
 // ==============================================================

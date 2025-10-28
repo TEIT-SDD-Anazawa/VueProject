@@ -11,8 +11,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { isAuthenticated, getUser } from '@/api/dummyApi'
+import { useUserStore } from '@/stores/userStore'
 
-const auth = computed(() => isAuthenticated())
-const user = getUser()
+const userStore = useUserStore()
+const auth = computed(() => !!userStore.user)
+const user = computed(() => userStore.user)
 </script>

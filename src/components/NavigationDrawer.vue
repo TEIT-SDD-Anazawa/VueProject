@@ -61,7 +61,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useRouter } from "vue-router";
-import { isAuthenticated, showLoginDialog } from "@/api/dummyApi";
+import { useUserStore } from "@/stores/userStore";
+import { showLoginDialog } from "@/api/userApi";
 
 interface Props {
   modelValue: boolean;
@@ -74,7 +75,11 @@ const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
 const router = useRouter();
-const isAuth = computed(() => isAuthenticated());
+const userStore = useUserStore();
+
+// Computed
+// ==============================================================
+const isAuth = computed(() => !!userStore.user);
 
 /** ナビゲーションバーの表示管理 */
 const internal = computed({
@@ -82,6 +87,8 @@ const internal = computed({
   set: (v: boolean) => emit("update:modelValue", v),
 });
 
+// Method
+// ==============================================================
 /**
  * 選択したページに遷移する
  * @param path 遷移先のパス

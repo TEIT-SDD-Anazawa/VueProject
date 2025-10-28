@@ -93,7 +93,7 @@
 
 <script setup lang="ts">
 import { ref, watch, computed } from "vue";
-import { createUser } from "@/api/dummyApi";
+import { createUser } from "@/api/userApi";
 import { withLoading } from "@/utils/loading";
 import { validatePassword } from "@/utils/validation";
 

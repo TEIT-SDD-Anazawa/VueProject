@@ -62,7 +62,6 @@
 
 <script setup lang="ts">
 import { ref, watch, computed } from "vue";
-import { login } from "@/api/authApi";
 import { withLoading } from "@/utils/loading";
 import { useUserStore } from "@/stores/userStore";
 
@@ -194,13 +193,11 @@ const onPasswordBlur = () => {
 const submit = async () => {
   // ログイン認証
   const res = await withLoading(loading, () =>
-    login(userId.value, password.value)
+    userStore.login(userId.value, password.value)
   );
-  if (res.success && res.user) {
+  if (res && res.success && res.user) {
     // 認証成功
     submitErrorMessage.value = "";
-    // Storeにユーザー情報を保存
-    userStore.setUser(res.user);
     emit("login-success");
     close();
   } else {

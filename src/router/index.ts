@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { isAuthenticated } from '@/api/dummyApi'
+import { useUserStore } from '@/stores/userStore'
 
 const Home = () => import('@/pages/Home.vue')
 const About = () => import('@/pages/About.vue')
@@ -20,7 +20,8 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.meta && (to.meta as any).requiresAuth) {
-    if (!isAuthenticated()) {
+    const userStore = useUserStore();
+    if (!userStore.user) {
       next({ name: 'Home' })
       return
     }

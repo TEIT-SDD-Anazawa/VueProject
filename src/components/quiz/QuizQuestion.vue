@@ -47,7 +47,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import QuizAnswer from "@/components/quiz/QuizAnswer.vue";
-import { fetchQuizQuestions } from "@/api/dummyApi";
+import { fetchQuizQuestions } from "@/api/quizApi";
 
 interface Option {
   id: number;
