@@ -6,23 +6,27 @@
 
       <!-- 入力欄 -->
       <v-card-text>
-        <v-text-field
-          v-model="userId"
-          label="ユーザーID"
-          :rules="userIdRules"
-          @blur="onUserIdBlur"
-        />
-        <v-text-field
-          v-model="password"
-          label="パスワード"
-          type="password"
-          :rules="passwordRules"
-          @blur="onPasswordBlur"
-        />
-        <!-- エラー表示 -->
-        <div v-if="submitErrorMessage" class="login-error">
-          {{ submitErrorMessage }}
-        </div>
+        <v-form @submit.prevent="submit">
+          <v-text-field
+            v-model="userId"
+            autocomplete="username"
+            label="ユーザーID"
+            :rules="userIdRules"
+            @blur="onUserIdBlur"
+          />
+          <v-text-field
+            v-model="password"
+            autocomplete="current-password"
+            label="パスワード"
+            type="password"
+            :rules="passwordRules"
+            @blur="onPasswordBlur"
+          />
+          <!-- エラー表示 -->
+          <div v-if="submitErrorMessage" class="login-error">
+            {{ submitErrorMessage }}
+          </div>
+        </v-form>
       </v-card-text>
 
       <!-- 実行ボタン -->

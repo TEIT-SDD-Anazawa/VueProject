@@ -4,8 +4,19 @@
     <v-card class="pa-4">
       <v-card-title>ユーザー情報</v-card-title>
       <v-card-text>
-        <v-text-field label="表示名" v-model="name" />
-        <v-text-field label="新しいパスワード" v-model="password" type="password" />
+        <v-form @submit.prevent="saveUser">
+          <v-text-field 
+            label="表示名" 
+            v-model="name" 
+            autocomplete="name"
+          />
+          <v-text-field 
+            label="新しいパスワード" 
+            v-model="password" 
+            type="password" 
+            autocomplete="new-password"
+          />
+        </v-form>
       </v-card-text>
       <v-card-actions>
         <div v-if="errorMessages.length" class="error-list">
@@ -71,7 +82,7 @@ const saveUser = async () => {
     }
   }
   // use the stored username (user ID); fall back to 'alice' for demo
-  const username = currentUser && currentUser.value ? currentUser.value.username : 'alice'
+  const username = currentUser && currentUser.value ? currentUser.value.username || 'alice' : 'alice'
   await updateUser(username, { name: name.value, password: password.value || undefined })
   password.value = ''
   // optionally show a notification

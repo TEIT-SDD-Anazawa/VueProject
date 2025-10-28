@@ -7,42 +7,48 @@
       <!-- 入力欄 -->
       <template v-if="!signupSucceeded">
         <v-card-text>
-          <v-text-field
-            v-model="userId"
-            label="ユーザーID"
-            :rules="userIdRules"
-            @blur="onUserIdBlur"
-          />
-          <v-text-field
-            v-model="displayName"
-            label="表示名"
-            :rules="displayNameRules"
-            @blur="onDisplayNameBlur"
-          />
-          <v-text-field
-            v-model="password"
-            label="パスワード"
-            type="password"
-            :rules="passwordRules"
-            @blur="onPasswordBlur"
-          />
-          <v-text-field
-            v-model="passwordConfirm"
-            label="パスワード（確認）"
-            type="password"
-            :rules="passwordConfirmRules"
-            @blur="onPasswordConfirmBlur"
-          />
-          <!-- エラー表示 -->
-          <div v-if="submitErrorMessages.length" class="error-list">
-            <div
-              v-for="(m, i) in submitErrorMessages"
-              :key="i"
-              class="error-item"
-            >
-              {{ m }}
+          <v-form @submit.prevent="submit">
+            <v-text-field
+              v-model="userId"
+              label="ユーザーID"
+              autocomplete="username"
+              :rules="userIdRules"
+              @blur="onUserIdBlur"
+            />
+            <v-text-field
+              v-model="displayName"
+              label="表示名"
+              autocomplete="name"
+              :rules="displayNameRules"
+              @blur="onDisplayNameBlur"
+            />
+            <v-text-field
+              v-model="password"
+              label="パスワード"
+              type="password"
+              autocomplete="new-password"
+              :rules="passwordRules"
+              @blur="onPasswordBlur"
+            />
+            <v-text-field
+              v-model="passwordConfirm"
+              label="パスワード（確認）"
+              type="password"
+              autocomplete="new-password"
+              :rules="passwordConfirmRules"
+              @blur="onPasswordConfirmBlur"
+            />
+            <!-- エラー表示 -->
+            <div v-if="submitErrorMessages.length" class="error-list">
+              <div
+                v-for="(m, i) in submitErrorMessages"
+                :key="i"
+                class="error-item"
+              >
+                {{ m }}
+              </div>
             </div>
-          </div>
+          </v-form>
         </v-card-text>
 
         <!-- 実行ボタン -->
