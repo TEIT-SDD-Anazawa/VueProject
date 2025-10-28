@@ -58,9 +58,9 @@ const saveUser = async () => {
       return
     }
   }
-  // use the stored username (user ID); fall back to 'alice' for demo
-  const username = currentUser && currentUser.value ? currentUser.value.username || 'alice' : 'alice'
-  await updateUser(username, { name: name.value, password: password.value || undefined })
+  // use the stored user id; fall back to 'alice' for demo
+  const userid = currentUser && currentUser.value ? (currentUser.value as any).id || 'alice' : 'alice'
+  await updateUser(userid, { name: name.value, password: password.value || undefined })
   password.value = ''
   // optionally show a notification
 }

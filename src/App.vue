@@ -70,7 +70,6 @@ const logoutUser = () => {
 };
 
 const onLoginSuccess = () => {
-  // UI updates automatically via reactive getUser
 };
 
 /** ナビゲーションバーの開閉処理 */

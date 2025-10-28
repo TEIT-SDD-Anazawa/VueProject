@@ -6,7 +6,6 @@ import { logout as apiLogout } from "@/api/dummyApi";
 interface User {
   id: string;
   name: string;
-  email: string;
 }
 
 export const useUserStore = defineStore("user", {
@@ -28,6 +27,5 @@ export const useUserStore = defineStore("user", {
   },
   getters: {
     getUserName: (state) => state.user?.name,
-    getUserEmail: (state) => state.user?.email,
   },
 });

@@ -1,4 +1,5 @@
 import { apiPost } from "@/api/apiClient";
+import { login as dummyLogin } from "@/api/dummyApi";
 
 export async function fetchUser(userId: string) {
   try {
@@ -10,10 +11,12 @@ export async function fetchUser(userId: string) {
   }
 }
 
-export async function loginUser(userId: string, password: string) {
+export async function login(userId: string, password: string) {
   try {
-    const res = await apiPost("/login", { userId, password });
-    return res;
+    // TODO ダミーを使う
+    // const res = await apiPost("/login", { userId, password });
+    // return res;
+    return dummyLogin(userId, password);
   } catch (error) {
     console.error("Error loginUser:", error);
     throw error;

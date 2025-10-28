@@ -62,8 +62,9 @@
 
 <script setup lang="ts">
 import { ref, watch, computed } from "vue";
-import { login } from "@/api/dummyApi";
+import { login } from "@/api/authApi";
 import { withLoading } from "@/utils/loading";
+import { useUserStore } from "@/stores/userStore";
 
 interface Props {
   /** ダイアログの表示非表示 */
@@ -81,6 +82,8 @@ type Emits = {
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
+
+const userStore = useUserStore();
 
 // Data
 // ==============================================================
@@ -193,9 +196,11 @@ const submit = async () => {
   const res = await withLoading(loading, () =>
     login(userId.value, password.value)
   );
-  if (res.success) {
+  if (res.success && res.user) {
     // 認証成功
     submitErrorMessage.value = "";
+    // Storeにユーザー情報を保存
+    userStore.setUser(res.user);
     emit("login-success");
     close();
   } else {

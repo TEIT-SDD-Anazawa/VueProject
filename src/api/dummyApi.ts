@@ -15,9 +15,7 @@ const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 // --- simple in-memory auth (moved from auth.ts) ---
 const token = vueRef<string | null>(null);
 // include username (user id) and display name
-const user = vueRef<{ id: number; username?: string; name: string } | null>(
-  null
-);
+const user = vueRef<{ id: string; name: string } | null>(null);
 
 // work with a mutable copy of users loaded from JSON
 // JSON now uses { userid: string, password: string, username: string }
@@ -43,32 +41,32 @@ async function persistUsersToFile() {
   }
 }
 
-export async function login(username: string, password: string) {
+export async function login(userid: string, password: string) {
   // simulate network latency
   await delay(2000);
 
-  // here `username` param is the user ID (login id). Stored user has `userid` and `username` (display)
+  // here `userid` param is the user ID (login id). Stored user has `userid` and `username` (display)
   const found = userList.find(
-    (u) => u.userid === username && u.password === password
+    (u) => u.userid === userid && u.password === password
   );
   if (found) {
     token.value = "dummy-token";
     // map stored fields to app user shape: username = user id, name = display name
-    user.value = { id: 1, username: found.userid, name: found.username };
-    return { success: true, token: token.value };
+    user.value = { id: found.userid, name: found.username };
+    return { success: true, token: token.value, user: user.value };
   }
 
   return { success: false };
 }
 
 export async function updateUser(
-  username: string,
+  userid: string,
   data: { name?: string; password?: string }
 ) {
   // simulate network latency
   await delay(2000);
-  // username param is user id (stored as userid)
-  const idx = userList.findIndex((u) => u.userid === username);
+  // userid param is user id (stored as userid)
+  const idx = userList.findIndex((u) => u.userid === userid);
   if (idx === -1) return { success: false, message: "not found" };
   if (data.name !== undefined) userList[idx].username = data.name;
   if (data.password !== undefined) userList[idx].password = data.password;
