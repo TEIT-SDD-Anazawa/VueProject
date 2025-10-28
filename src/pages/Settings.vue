@@ -28,21 +28,15 @@
 
       <v-divider class="my-4" />
 
-      <v-card-title>テーマ設定</v-card-title>
-      <v-card-text>
-        <v-switch v-model="dark" label="ダークモード" />
-      </v-card-text>
     </v-card>
   </v-container>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useTheme } from 'vuetify'
+import { ref } from 'vue'
 import { getUser, updateUser } from '@/api/dummyApi'
 import { validatePassword } from '@/utils/validation'
 
-const dark = ref(false)
 const name = ref('')
 const password = ref('')
 
@@ -51,24 +45,7 @@ const currentUser = getUser()
 if (currentUser && currentUser.value) {
   name.value = currentUser.value.name || ''
 }
-// initialize from localStorage
-if (typeof window !== 'undefined') {
-  dark.value = (window.localStorage.getItem('theme') || 'light') === 'dark'
-}
-
-const theme = useTheme()
-
-watch(dark, (v) => {
-  const name = v ? 'dark' : 'light'
-  try {
-    theme.global.name.value = name
-  } catch (e) {
-    // fallback
-  }
-  if (typeof window !== 'undefined') {
-    window.localStorage.setItem('theme', name)
-  }
-}, { immediate: true })
+// no theme reactive logic anymore; app stays on light theme
 
 const errorMessages = ref<string[]>([])
 

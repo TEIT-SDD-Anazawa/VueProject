@@ -6,9 +6,9 @@
       :auth="auth"
       :user="user"
       :showLoginDialog="showLoginDialog"
-      @toggle-drawer="drawer = !drawer"
+      @toggle-drawer="toggleDrawer"
       @logout="logoutUser"
-      @open-login="showLoginDialog = true"
+      @open-login="openLoginDialog"
       @update:showLoginDialog="updateShowLoginDialog"
       @login-success="onLoginSuccess"
     />
@@ -24,35 +24,62 @@ import { ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import {
   isAuthenticated,
-  logout,
-  getUser,
   showLoginDialog as sharedShowLoginDialog,
+  getUser,
 } from "@/api/dummyApi";
+import { useUserStore } from "@/stores/userStore";
 import NavigationDrawer from "@/components/NavigationDrawer.vue";
 import HeaderBar from "@/components/HeaderBar.vue";
 
-const drawer = ref(false);
 const router = useRouter();
+const userStore = useUserStore();
+
+// Data
+// ==============================================================
+/** ナビゲーションバーの開閉プロパティ */
+const drawer = ref(false);
+/** ログインダイアログの表示非表示 */
+const showLoginDialog = ref(false);
+const apiUserRef = getUser();
+
+// Computed
+// ==============================================================
+const auth = computed(() => isAuthenticated());
+const user = computed(() => apiUserRef.value as
+  | { username?: string; name?: string }
+  | null);
+
+// Watch
+// ==============================================================
+watch(sharedShowLoginDialog, (v) => (showLoginDialog.value = v));
+watch(showLoginDialog, (v) => (sharedShowLoginDialog.value = v));
+
+// Method
+// ==============================================================
 const go = (path: string) => router.push(path);
 const goAndClose = (path: string) => {
   go(path);
   drawer.value = false;
 };
-const auth = computed(() => isAuthenticated());
-const user = getUser();
-const showLoginDialog = ref(false);
 const updateShowLoginDialog = (v: boolean) => (showLoginDialog.value = v);
-// sync with shared auth flag
-watch(sharedShowLoginDialog, (v) => (showLoginDialog.value = v));
-watch(showLoginDialog, (v) => (sharedShowLoginDialog.value = v));
-
 const logoutUser = () => {
-  logout();
-  // after logout, navigate to home
+  userStore.logout();
+
+  // ログアウト時はホームに遷移
   router.push("/").catch(() => {});
 };
 
 const onLoginSuccess = () => {
   // UI updates automatically via reactive getUser
+};
+
+/** ナビゲーションバーの開閉処理 */
+const toggleDrawer = () => {
+  drawer.value = !drawer.value;
+};
+
+/** ログインダイアログを表示する */
+const openLoginDialog = () => {
+  showLoginDialog.value = true;
 };
 </script>

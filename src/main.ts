@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import { createPinia } from 'pinia'
 
 // Vuetify
 import 'vuetify/styles'
@@ -13,11 +14,7 @@ import { ja } from 'vuetify/locale'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
-// Determine saved theme (light/dark)
-const savedTheme = (typeof window !== 'undefined' && window.localStorage)
-  ? window.localStorage.getItem('theme') || 'light'
-  : 'light'
-
+// Use single light theme (theme switching removed)
 const vuetify = createVuetify({
   components,
   directives,
@@ -26,7 +23,7 @@ const vuetify = createVuetify({
     messages: { ja }
   },
   theme: {
-    defaultTheme: savedTheme,
+  defaultTheme: 'light',
     themes: {
       light: {
         dark: false,
@@ -53,6 +50,8 @@ const vuetify = createVuetify({
 })
 
 const app = createApp(App)
+const pinia = createPinia()
+app.use(pinia)
 app.use(vuetify)
 app.use(router)
 app.mount('#app')
