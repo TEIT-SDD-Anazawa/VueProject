@@ -1,4 +1,4 @@
 [
-  { "userid": "eris", "password": "tfo1001!", "username": "Eris" },
-  { "userid": "lila", "password": "tfo1001!", "username": "Lila" }
+  { "userid": "test", "password": "Tfo1001!", "username": "Test" },
+  { "userid": "sample", "password": "Tfo1001!", "username": "Sample" }
 ]

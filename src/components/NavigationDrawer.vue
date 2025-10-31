@@ -62,7 +62,6 @@
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/userStore";
-import { showLoginDialog } from "@/api/userApi";
 
 interface Props {
   modelValue: boolean;
@@ -101,8 +100,9 @@ const select = (path: string) => {
 /** 未ログインならログインダイアログを表示する */
 const selectWithAuth = (path: string) => {
   if (!isAuth.value) {
-    showLoginDialog.value = true;
+    // navigate to login page
     internal.value = false;
+    router.push({ name: 'Login' }).catch(() => {})
     return;
   }
   select(path);

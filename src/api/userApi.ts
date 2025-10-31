@@ -5,10 +5,10 @@ import {
   updateUser as dummyUpdateUser,
 } from "@/api/dummyApi";
 import { login as authLogin } from "@/api/authApi";
-import { createUser as dummyCreateUser } from '@/api/dummyApi'
-import { showLoginDialog as dummyShowLoginDialog } from '@/api/dummyApi'
+import { createUser as dummyCreateUser } from "@/api/dummyApi";
+import { showLoginDialog as dummyShowLoginDialog } from "@/api/dummyApi";
 
-export const showLoginDialog = dummyShowLoginDialog
+export const showLoginDialog = dummyShowLoginDialog;
 
 export async function login(userid: string, password: string) {
   // Delegate to authApi (which currently delegates to dummyLogin)
@@ -37,8 +37,12 @@ export async function updateUser(
   return await dummyUpdateUser(userid, data);
 }
 
-export async function createUser(userObj: { username: string; password: string; name: string }) {
-  return await dummyCreateUser(userObj)
+export async function createUser(userObj: {
+  username: string;
+  password: string;
+  name: string;
+}) {
+  return await dummyCreateUser(userObj);
 }
 
 export default {

@@ -29,13 +29,7 @@
     </template>
   </v-app-bar>
 
-  <!-- ログインダイアログ -->
-  <LoginDialog
-    v-model="showLoginDialogLocal"
-    @login-success="loginSuccess"
-    @open-signup="openSignupFromLogin"
-  />
-  <!-- サインアップダイアログ -->
+  <!-- サインアップダイアログ（ログインはページ化したためダイアログは埋め込まない） -->
   <SignupDialog
     v-model="showSignupDialogLocal"
     @signup-success="signupSuccess"
@@ -45,44 +39,31 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import LoginDialog from "@/components/LoginDialog.vue";
 import SignupDialog from "@/components/SignupDialog.vue";
+import { useRouter } from 'vue-router'
 
 interface Props {
   auth: boolean;
   user?: { username?: string; name?: string } | null;
-  showLoginDialog: boolean;
 }
 
 type Emits = {
-  (e: "update:showLoginDialog", v: boolean): void;
   (e: "toggle-drawer"): void;
   (e: "logout"): void;
-  (e: "open-login"): void;
   (e: "login-success"): void;
 };
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
+const router = useRouter()
 
 // Data
 // ==============================================================
-/** ログインダイアログの表示状態 */
-const showLoginDialogLocal = ref(props.showLoginDialog);
 /** サインアップダイアログの表示状態 */
 const showSignupDialogLocal = ref(false);
 
-// Watch
+// Method
 // ==============================================================
-/** ログインダイアログの表示状態を更新する */
-watch(
-  () => props.showLoginDialog,
-  (v) => (showLoginDialogLocal.value = v)
-);
-
-/** ログインダイアログの表示状態を親コンポーネントに通知する */
-watch(showLoginDialogLocal, (v) => emit("update:showLoginDialog", v));
-
 // Method
 // ==============================================================
 /**
@@ -90,7 +71,6 @@ watch(showLoginDialogLocal, (v) => emit("update:showLoginDialog", v));
  * ログインダイアログを閉じて、サインアップダイアログを開く
  */
 const openSignupFromLogin = () => {
-  showLoginDialogLocal.value = false;
   showSignupDialogLocal.value = true;
 };
 
@@ -100,7 +80,8 @@ const openSignupFromLogin = () => {
  */
 const openLoginFromSignup = () => {
   showSignupDialogLocal.value = false;
-  showLoginDialogLocal.value = true;
+  // open the login page instead of showing a dialog
+  router.push({ name: 'Login' }).catch(() => {})
 };
 
 /** サイドバーの開閉処理 */
@@ -108,9 +89,9 @@ const toggleDrawer = () => {
   emit("toggle-drawer");
 };
 
-/** ログインダイアログの開閉処理 */
+/** ログインページへ遷移する */
 const openLoginDialog = () => {
-  emit("open-login");
+  router.push({ name: 'Login' }).catch(() => {})
 };
 
 /** ログイン成功時の処理 */
