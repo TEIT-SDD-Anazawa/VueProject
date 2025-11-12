@@ -17,19 +17,10 @@
         <tbody>
           <tr v-for="(m, idx) in answered" :key="idx">
             <td>
-              <a
-                href="#"
-                @click.prevent="$emit('retry-question', m.q.questionId)"
-                >Q{{ m.q.questionId }}</a
-              >
+              <a href="#" @click.prevent="$emit('retry-question', m.q.id)">Q{{ m.q.id }}</a>
             </td>
-            <td>{{ m.q.questionText }}</td>
-            <td>
-              {{
-                (m.q.options.find((o: any) => o.id === m.selected) || {})
-                  .optionText
-              }}
-            </td>
+            <td>{{ m.q.question }}</td>
+            <td>{{ (m.q.options && m.q.options[m.selected]) ?? '' }}</td>
             <td>
               <span v-if="m.correct" style="color: green">◯</span>
               <span v-else style="color: red">✕</span>
@@ -40,8 +31,8 @@
     </div>
 
     <div style="margin-top: 12px">
-      <v-btn color="primary" @click="$emit('retry')">もう一度</v-btn>
-      <v-btn color="secondary" @click="$emit('home')">ホームへ</v-btn>
+      <v-btn color="primary" @click="$emit('retry')">もう一度挑戦する</v-btn>
+      <v-btn color="secondary" @click="$emit('home')">問題選択へ戻る</v-btn>
     </div>
   </div>
 </template>

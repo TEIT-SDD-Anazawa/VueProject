@@ -16,12 +16,14 @@
   },
   "devDependencies": {
     "@types/axios": "^0.9.36",
+    "@types/node": "^24.9.2",
     "@vitejs/plugin-vue": "^4.0.0",
     "autoprefixer": "^10.4.14",
     "pinia": "^3.0.3",
     "postcss": "^8.4.32",
     "sass": "^1.66.1",
     "typescript": "^5.2.2",
-    "vite": "^5.0.0"
+    "vite": "^5.0.0",
+    "vite-plugin-vuetify": "^2.1.2"
   }
 }

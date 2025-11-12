@@ -2,26 +2,43 @@
   <div class="quiz-page">
     <h1>Quiz</h1>
 
-    <component
-      :is="currentComponent"
-      v-bind="currentProps"
+    <QuizHome
+      v-if="stage === 'home'"
+      :quizzes="quizStore.quizzes"
+      :loading="quizStore.loading"
       @start="onStart"
+    />
+
+    <QuizQuestion
+      v-else-if="stage === 'question'"
+      :category="currentParams?.category || ''"
+      :numQuestions="currentParams?.numQuestions || 5"
+      :retryQuestionId="currentParams?.retryQuestionId"
       @finish="onFinish"
-      @retry="onRetry"
+      @home="onHome"
       @retry-question="onRetryQuestion"
+    />
+
+    <QuizResult
+      v-else
+      :score="result"
+      :answered="mistakes"
+      @retry="onRetry"
       @home="onHome"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
+import { useQuizStore } from "@/stores/quizStore";
 import QuizHome from "@/components/quiz/QuizHome.vue";
 import QuizQuestion from "@/components/quiz/QuizQuestion.vue";
 import QuizResult from "@/components/quiz/QuizResult.vue";
 
 type Stage = "home" | "question" | "result";
 
+const quizStore = useQuizStore();
 const stage = ref<Stage>("home");
 const result = ref({ correct: 0, total: 0 });
 const mistakes = ref<any[]>([]);
@@ -31,6 +48,11 @@ const currentParams = ref<{
   retryQuestionId?: number;
 } | null>(null);
 
+// Initialize quiz data on mount
+onMounted(() => {
+  quizStore.fetchQuizzes();
+});
+
 const currentComponent = computed(() => {
   if (stage.value === "home") return QuizHome;
   if (stage.value === "question") return QuizQuestion;
@@ -38,7 +60,10 @@ const currentComponent = computed(() => {
 });
 
 const currentProps = computed(() => {
-  if (stage.value === "home") return {};
+  if (stage.value === "home") return {
+    quizzes: quizStore.quizzes,
+    loading: quizStore.loading
+  };
   if (stage.value === "question")
     return {
       category: currentParams.value?.category || "",
@@ -50,8 +75,10 @@ const currentProps = computed(() => {
   return {};
 });
 
-const onStart = (payload: { category: string; numQuestions: number }) => {
+const onStart = async (payload: { category: string; numQuestions: number }) => {
   currentParams.value = payload;
+  // Load questions for the selected quiz
+  await quizStore.fetchQuizQuestions(payload.category);
   stage.value = "question";
 };
 
@@ -83,6 +110,7 @@ const onRetry = () => {
 };
 
 const onHome = () => {
+  quizStore.resetQuiz();
   stage.value = "home";
 };
 </script>

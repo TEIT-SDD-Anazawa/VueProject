@@ -5,6 +5,7 @@
       {
         "questionId": 1,
         "questionText": "ゴーストタイプに効果抜群の技はどれ？",
+        "explanation": "ゴーストタイプに効果的なのはゴースト技です。シャドーボールはゴーストタイプの特殊技で効果抜群になります。",
         "options": [
           { "id": 1, "optionText": "シャドーボール" },
           { "id": 2, "optionText": "はっぱカッター" },
@@ -16,6 +17,7 @@
       {
         "questionId": 2,
         "questionText": "ピカチュウの進化形はどれ？",
+        "explanation": "ピカチュウは雷の石を使うことでライチュウに進化します。",
         "options": [
           { "id": 1, "optionText": "ライチュウ" },
           { "id": 2, "optionText": "イーブイ" },
@@ -32,17 +34,25 @@
       {
         "questionId": 1,
         "questionText": "USB3.0の説明として、適切なものはどれか。",
+        "explanation": "USB3.0は『スーパースピード』という高速転送方式を採用しており、従来のUSBに比べ高速です。",
         "options": [
           { "id": 1, "optionText": "1クロックで2ビットのデータ伝送を行う。" },
           { "id": 2, "optionText": "PCと周辺機器とを接続する規格である。" },
-          { "id": 3, "optionText": "音声、映像などに適したインターフェースである。" },
-          { "id": 4, "optionText": "スーパースピードと呼ばれる転送方式を採用している。" }
+          {
+            "id": 3,
+            "optionText": "音声、映像などに適したインターフェースである。"
+          },
+          {
+            "id": 4,
+            "optionText": "スーパースピードと呼ばれる転送方式を採用している。"
+          }
         ],
         "answer": 4
       },
       {
         "questionId": 2,
         "questionText": "ファイアウォールの主な機能はどれか。",
+        "explanation": "ファイアウォールは外部からの不正なアクセスを遮断することでネットワークを保護します。",
         "options": [
           { "id": 1, "optionText": "コンピューターグラフィックスの性能向上。" },
           { "id": 2, "optionText": "ネットワーク経由での不正アクセスの遮断。" },
@@ -50,6 +60,611 @@
           { "id": 4, "optionText": "ディスク容量の増加。" }
         ],
         "answer": 2
+      }
+    ]
+  },
+  {
+    "category": "韓国語（TOPIK初級）",
+    "questions": [
+      {
+        "questionId": 1,
+        "questionText": "다음 중 '안녕하세요'의 의미로 맞는 것은 무엇입니까?",
+        "explanation": "안녕하세요は日本語で「こんにちは」の意味です。",
+        "options": [
+          { "id": 1, "optionText": "こんにちは" },
+          { "id": 2, "optionText": "さようなら" },
+          { "id": 3, "optionText": "ありがとう" },
+          { "id": 4, "optionText": "おはよう" }
+        ],
+        "answer": 1
+      },
+      {
+        "questionId": 2,
+        "questionText": "다음 중 '이름이 무엇입니까?' 의 답변으로 알맞은 것은 무엇입니까?",
+        "explanation": "「名前は何ですか？」の答えには、自分の名前を言います。",
+        "options": [
+          { "id": 1, "optionText": "저는 학생입니다." },
+          { "id": 2, "optionText": "저는 일본 사람입니다." },
+          { "id": 3, "optionText": "저는 사토입니다." },
+          { "id": 4, "optionText": "저는 회사원입니다." }
+        ],
+        "answer": 3
+      },
+      {
+        "questionId": 3,
+        "questionText": "'감사합니다'의 의미로 맞는 것은 무엇입니까?",
+        "explanation": "감사합니다は「ありがとう」や「ありがとうございます」です。",
+        "options": [
+          { "id": 1, "optionText": "さようなら" },
+          { "id": 2, "optionText": "ありがとう" },
+          { "id": 3, "optionText": "おはよう" },
+          { "id": 4, "optionText": "こんにちは" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 4,
+        "questionText": "'학교'는 무엇입니까?",
+        "explanation": "학교は「学校」です。",
+        "options": [
+          { "id": 1, "optionText": "会社" },
+          { "id": 2, "optionText": "病院" },
+          { "id": 3, "optionText": "家" },
+          { "id": 4, "optionText": "学校" }
+        ],
+        "answer": 4
+      },
+      {
+        "questionId": 5,
+        "questionText": "다음 중 '사과'의 의미로 맞는 것은 무엇입니까?",
+        "explanation": "사과は「りんご」です。",
+        "options": [
+          { "id": 1, "optionText": "バナナ" },
+          { "id": 2, "optionText": "りんご" },
+          { "id": 3, "optionText": "ぶどう" },
+          { "id": 4, "optionText": "みかん" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 6,
+        "questionText": "'물'은 무엇입니까?",
+        "explanation": "물は「水」です。",
+        "options": [
+          { "id": 1, "optionText": "牛乳" },
+          { "id": 2, "optionText": "水" },
+          { "id": 3, "optionText": "お茶" },
+          { "id": 4, "optionText": "ジュース" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 7,
+        "questionText": "'친구'의 의미로 알맞은 것은 무엇입니까?",
+        "explanation": "친구は「友達」の意味です。",
+        "options": [
+          { "id": 1, "optionText": "先生" },
+          { "id": 2, "optionText": "友達" },
+          { "id": 3, "optionText": "両親" },
+          { "id": 4, "optionText": "兄弟" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 8,
+        "questionText": "다음 중 '밥을 먹어요'와 뜻이 같은 것은 무엇입니까?",
+        "explanation": "'밥을 먹어요'は「ご飯を食べます」",
+        "options": [
+          { "id": 1, "optionText": "ご飯を食べます" },
+          { "id": 2, "optionText": "ご飯を作ります" },
+          { "id": 3, "optionText": "ご飯を買います" },
+          { "id": 4, "optionText": "ご飯を見ます" }
+        ],
+        "answer": 1
+      },
+      {
+        "questionId": 9,
+        "questionText": "다음 중 '책'의 의미로 맞는 것은 무엇입니까?",
+        "explanation": "책は「本」の意味です。",
+        "options": [
+          { "id": 1, "optionText": "雑誌" },
+          { "id": 2, "optionText": "本" },
+          { "id": 3, "optionText": "新聞" },
+          { "id": 4, "optionText": "ノート" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 10,
+        "questionText": "'어머니'와 같은 가족을 고르세요.",
+        "explanation": "'어머니'は「お母さん」です。",
+        "options": [
+          { "id": 1, "optionText": "おじいさん" },
+          { "id": 2, "optionText": "おばあさん" },
+          { "id": 3, "optionText": "お母さん" },
+          { "id": 4, "optionText": "お父さん" }
+        ],
+        "answer": 3
+      },
+      {
+        "questionId": 11,
+        "questionText": "'학생'은 무엇입니까?",
+        "explanation": "학생は「学生」です。",
+        "options": [
+          { "id": 1, "optionText": "先生" },
+          { "id": 2, "optionText": "学生" },
+          { "id": 3, "optionText": "会社員" },
+          { "id": 4, "optionText": "店員" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 12,
+        "questionText": "'의사'의 뜻으로 맞는 것은 무엇입니까?",
+        "explanation": "의사는「医者」です。",
+        "options": [
+          { "id": 1, "optionText": "医者" },
+          { "id": 2, "optionText": "先生" },
+          { "id": 3, "optionText": "学生" },
+          { "id": 4, "optionText": "会社員" }
+        ],
+        "answer": 1
+      },
+      {
+        "questionId": 13,
+        "questionText": "다음 중 '학교에 갑니다'와 뜻이 같은 것은 무엇입니까?",
+        "explanation": "'学校に行きます'の意味です。",
+        "options": [
+          { "id": 1, "optionText": "会社に行きます" },
+          { "id": 2, "optionText": "学校に行きます" },
+          { "id": 3, "optionText": "家に行きます" },
+          { "id": 4, "optionText": "病院に行きます" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 14,
+        "questionText": "'일본'은 어디 나라입니까?",
+        "explanation": "'일본'は「日本」です。",
+        "options": [
+          { "id": 1, "optionText": "アメリカ" },
+          { "id": 2, "optionText": "韓国" },
+          { "id": 3, "optionText": "日本" },
+          { "id": 4, "optionText": "中国" }
+        ],
+        "answer": 3
+      },
+      {
+        "questionId": 15,
+        "questionText": "'서울'은 어느 나라의 도시입니까?",
+        "explanation": "서울は韓国の首都です。",
+        "options": [
+          { "id": 1, "optionText": "韓国" },
+          { "id": 2, "optionText": "日本" },
+          { "id": 3, "optionText": "中国" },
+          { "id": 4, "optionText": "アメリカ" }
+        ],
+        "answer": 1
+      },
+      {
+        "questionId": 16,
+        "questionText": "'여름'의 의미로 알맞은 것은 무엇입니까?",
+        "explanation": "여름は「夏」です。",
+        "options": [
+          { "id": 1, "optionText": "春" },
+          { "id": 2, "optionText": "冬" },
+          { "id": 3, "optionText": "秋" },
+          { "id": 4, "optionText": "夏" }
+        ],
+        "answer": 4
+      },
+      {
+        "questionId": 17,
+        "questionText": "'신문'은 무엇입니까?",
+        "explanation": "신문は「新聞」です。",
+        "options": [
+          { "id": 1, "optionText": "雑誌" },
+          { "id": 2, "optionText": "新聞" },
+          { "id": 3, "optionText": "ノート" },
+          { "id": 4, "optionText": "本" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 18,
+        "questionText": "'커피'를 마시고 싶을 때 뭐라고 합니까?",
+        "explanation": "'커피를 주세요'と言えば「コーヒーをください」です。",
+        "options": [
+          { "id": 1, "optionText": "커피를 주세요." },
+          { "id": 2, "optionText": "빵을 주세요." },
+          { "id": 3, "optionText": "물 주세요." },
+          { "id": 4, "optionText": "차 주세요." }
+        ],
+        "answer": 1
+      },
+      {
+        "questionId": 19,
+        "questionText": "다음 중 '오후'의 의미로 맞는 것은 무엇입니까?",
+        "explanation": "오후は「午後」です。",
+        "options": [
+          { "id": 1, "optionText": "朝" },
+          { "id": 2, "optionText": "午後" },
+          { "id": 3, "optionText": "夜" },
+          { "id": 4, "optionText": "昼" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 20,
+        "questionText": "'빵'의 의미로 알맞은 것은 무엇입니까?",
+        "explanation": "빵は「パン」です。",
+        "options": [
+          { "id": 1, "optionText": "ご飯" },
+          { "id": 2, "optionText": "おかず" },
+          { "id": 3, "optionText": "パン" },
+          { "id": 4, "optionText": "麺" }
+        ],
+        "answer": 3
+      },
+      {
+        "questionId": 21,
+        "questionText": "'고맙습니다'의 의미로 알맞은 것은 무엇입니까?",
+        "explanation": "고맙습니다は「ありがとう」と同じ意味です。",
+        "options": [
+          { "id": 1, "optionText": "さようなら" },
+          { "id": 2, "optionText": "こんにちは" },
+          { "id": 3, "optionText": "ありがとう" },
+          { "id": 4, "optionText": "おはよう" }
+        ],
+        "answer": 3
+      },
+      {
+        "questionId": 22,
+        "questionText": "'선생님'은 누구입니까?",
+        "explanation": "'선생님'は「先生」です。",
+        "options": [
+          { "id": 1, "optionText": "学生" },
+          { "id": 2, "optionText": "先生" },
+          { "id": 3, "optionText": "店員" },
+          { "id": 4, "optionText": "医者" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 23,
+        "questionText": "'좋아요'의 의미로 알맞은 것은 무엇입니까?",
+        "explanation": "좋아요は「良いです」という意味です。",
+        "options": [
+          { "id": 1, "optionText": "悪いです" },
+          { "id": 2, "optionText": "良いです" },
+          { "id": 3, "optionText": "高いです" },
+          { "id": 4, "optionText": "寒いです" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 24,
+        "questionText": "'식당'의 의미로 알맞은 것은 무엇입니까?",
+        "explanation": "식당は「食堂・レストラン」の意味です。",
+        "options": [
+          { "id": 1, "optionText": "図書館" },
+          { "id": 2, "optionText": "病院" },
+          { "id": 3, "optionText": "食堂" },
+          { "id": 4, "optionText": "銀行" }
+        ],
+        "answer": 3
+      },
+      {
+        "questionId": 25,
+        "questionText": "'텔레비전'의 의미로 알맞은 것은 무엇입니까?",
+        "explanation": "텔레비전は「テレビ」です。",
+        "options": [
+          { "id": 1, "optionText": "パソコン" },
+          { "id": 2, "optionText": "ラジオ" },
+          { "id": 3, "optionText": "テレビ" },
+          { "id": 4, "optionText": "冷蔵庫" }
+        ],
+        "answer": 3
+      },
+      {
+        "questionId": 26,
+        "questionText": "'창문'은 무엇입니까?",
+        "explanation": "창문は「窓」です。",
+        "options": [
+          { "id": 1, "optionText": "ドア" },
+          { "id": 2, "optionText": "窓" },
+          { "id": 3, "optionText": "机" },
+          { "id": 4, "optionText": "椅子" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 27,
+        "questionText": "'월요일'의 의미로 알맞은 것은 무엇입니까?",
+        "explanation": "월요일は「月曜日」です。",
+        "options": [
+          { "id": 1, "optionText": "月曜日" },
+          { "id": 2, "optionText": "火曜日" },
+          { "id": 3, "optionText": "水曜日" },
+          { "id": 4, "optionText": "金曜日" }
+        ],
+        "answer": 1
+      },
+      {
+        "questionId": 28,
+        "questionText": "'도서관'은 어디입니까?",
+        "explanation": "도서관は「図書館」です。",
+        "options": [
+          { "id": 1, "optionText": "銀行" },
+          { "id": 2, "optionText": "図書館" },
+          { "id": 3, "optionText": "食堂" },
+          { "id": 4, "optionText": "病院" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 29,
+        "questionText": "'한국어를 공부합니다'의 의미로 알맞은 것은 무엇입니까?",
+        "explanation": "'韓国語を勉強します'の意味です。",
+        "options": [
+          { "id": 1, "optionText": "韓国語を話します" },
+          { "id": 2, "optionText": "韓国語を勉強します" },
+          { "id": 3, "optionText": "韓国語を聞きます" },
+          { "id": 4, "optionText": "韓国語を忘れます" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 30,
+        "questionText": "'운동'의 의미로 알맞은 것은 무엇입니까?",
+        "explanation": "운동は「運動・スポーツ」です。",
+        "options": [
+          { "id": 1, "optionText": "勉強" },
+          { "id": 2, "optionText": "運動" },
+          { "id": 3, "optionText": "食事" },
+          { "id": 4, "optionText": "掃除" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 31,
+        "questionText": "'시장'은 어디입니까?",
+        "explanation": "시장は「市場・マーケット」です。",
+        "options": [
+          { "id": 1, "optionText": "病院" },
+          { "id": 2, "optionText": "銀行" },
+          { "id": 3, "optionText": "市場" },
+          { "id": 4, "optionText": "図書館" }
+        ],
+        "answer": 3
+      },
+      {
+        "questionId": 32,
+        "questionText": "'자동차'의 의미로 맞는 것은 무엇입니까?",
+        "explanation": "자동차は「自動車・車」です。",
+        "options": [
+          { "id": 1, "optionText": "自転車" },
+          { "id": 2, "optionText": "電車" },
+          { "id": 3, "optionText": "車" },
+          { "id": 4, "optionText": "バス" }
+        ],
+        "answer": 3
+      },
+      {
+        "questionId": 33,
+        "questionText": "'여동생'은 누구입니까?",
+        "explanation": "여동생は「妹」です。",
+        "options": [
+          { "id": 1, "optionText": "兄" },
+          { "id": 2, "optionText": "姉" },
+          { "id": 3, "optionText": "妹" },
+          { "id": 4, "optionText": "弟" }
+        ],
+        "answer": 3
+      },
+      {
+        "questionId": 34,
+        "questionText": "'오빠'는 누구입니까?",
+        "explanation": "오빠は「お兄さん（女性が使う）」です。",
+        "options": [
+          { "id": 1, "optionText": "妹" },
+          { "id": 2, "optionText": "弟" },
+          { "id": 3, "optionText": "兄" },
+          { "id": 4, "optionText": "姉" }
+        ],
+        "answer": 3
+      },
+      {
+        "questionId": 35,
+        "questionText": "'전화'는 무엇입니까?",
+        "explanation": "전화は「電話」です。",
+        "options": [
+          { "id": 1, "optionText": "机" },
+          { "id": 2, "optionText": "電話" },
+          { "id": 3, "optionText": "椅子" },
+          { "id": 4, "optionText": "時計" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 36,
+        "questionText": "'밖'의 의미로 알맞은 것은 무엇입니까?",
+        "explanation": "'밖'は「外」です。",
+        "options": [
+          { "id": 1, "optionText": "外" },
+          { "id": 2, "optionText": "中" },
+          { "id": 3, "optionText": "上" },
+          { "id": 4, "optionText": "下" }
+        ],
+        "answer": 1
+      },
+      {
+        "questionId": 37,
+        "questionText": "'오늘'의 의미로 알맞은 것은 무엇입니까?",
+        "explanation": "오늘は「今日」です。",
+        "options": [
+          { "id": 1, "optionText": "明日" },
+          { "id": 2, "optionText": "今日" },
+          { "id": 3, "optionText": "昨日" },
+          { "id": 4, "optionText": "先週" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 38,
+        "questionText": "'공원'은 어디입니까?",
+        "explanation": "공원は「公園」です。",
+        "options": [
+          { "id": 1, "optionText": "公園" },
+          { "id": 2, "optionText": "学校" },
+          { "id": 3, "optionText": "病院" },
+          { "id": 4, "optionText": "図書館" }
+        ],
+        "answer": 1
+      },
+      {
+        "questionId": 39,
+        "questionText": "'생일'은 무엇입니까?",
+        "explanation": "'생일'は「誕生日」です。",
+        "options": [
+          { "id": 1, "optionText": "休み" },
+          { "id": 2, "optionText": "誕生日" },
+          { "id": 3, "optionText": "休日" },
+          { "id": 4, "optionText": "記念日" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 40,
+        "questionText": "'아침'의 의미로 알맞은 것은 무엇입니까?",
+        "explanation": "아침は「朝」です。",
+        "options": [
+          { "id": 1, "optionText": "夜" },
+          { "id": 2, "optionText": "朝" },
+          { "id": 3, "optionText": "昼" },
+          { "id": 4, "optionText": "夕方" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 41,
+        "questionText": "'공부하다'는 무엇입니까?",
+        "explanation": "'공부하다'は「勉強する」です。",
+        "options": [
+          { "id": 1, "optionText": "休む" },
+          { "id": 2, "optionText": "遊ぶ" },
+          { "id": 3, "optionText": "勉強する" },
+          { "id": 4, "optionText": "食べる" }
+        ],
+        "answer": 3
+      },
+      {
+        "questionId": 42,
+        "questionText": "'시계'는 무엇입니까?",
+        "explanation": "시계は「時計」です。",
+        "options": [
+          { "id": 1, "optionText": "時計" },
+          { "id": 2, "optionText": "電話" },
+          { "id": 3, "optionText": "机" },
+          { "id": 4, "optionText": "椅子" }
+        ],
+        "answer": 1
+      },
+      {
+        "questionId": 43,
+        "questionText": "'병원'은 어디입니까?",
+        "explanation": "병원は「病院」です。",
+        "options": [
+          { "id": 1, "optionText": "銀行" },
+          { "id": 2, "optionText": "病院" },
+          { "id": 3, "optionText": "食堂" },
+          { "id": 4, "optionText": "学校" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 44,
+        "questionText": "'너무'의 의미로 알맞은 것은 무엇입니까?",
+        "explanation": "'너무'は「とても」「すごく」という意味です。",
+        "options": [
+          { "id": 1, "optionText": "すこし" },
+          { "id": 2, "optionText": "とても" },
+          { "id": 3, "optionText": "はやく" },
+          { "id": 4, "optionText": "おそく" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 45,
+        "questionText": "'비'의 의미로 알맞은 것은 무엇입니까?",
+        "explanation": "'비'は「雨」です。",
+        "options": [
+          { "id": 1, "optionText": "雪" },
+          { "id": 2, "optionText": "風" },
+          { "id": 3, "optionText": "雨" },
+          { "id": 4, "optionText": "雷" }
+        ],
+        "answer": 3
+      },
+      {
+        "questionId": 46,
+        "questionText": "'스포츠'의 의미는 무엇입니까?",
+        "explanation": "'스포츠'は「スポーツ」です。",
+        "options": [
+          { "id": 1, "optionText": "音楽" },
+          { "id": 2, "optionText": "スポーツ" },
+          { "id": 3, "optionText": "映画" },
+          { "id": 4, "optionText": "勉強" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 47,
+        "questionText": "'집'은 어디입니까?",
+        "explanation": "'집'は「家」です。",
+        "options": [
+          { "id": 1, "optionText": "銀行" },
+          { "id": 2, "optionText": "家" },
+          { "id": 3, "optionText": "会社" },
+          { "id": 4, "optionText": "学校" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 48,
+        "questionText": "'노래'의 의미로 알맞은 것은 무엇입니까?",
+        "explanation": "'노래'は「歌」です。",
+        "options": [
+          { "id": 1, "optionText": "絵" },
+          { "id": 2, "optionText": "歌" },
+          { "id": 3, "optionText": "ダンス" },
+          { "id": 4, "optionText": "本" }
+        ],
+        "answer": 2
+      },
+      {
+        "questionId": 49,
+        "questionText": "'오늘 날씨가 좋네요.'의 뜻으로 맞는 것은 무엇입니까?",
+        "explanation": "「今日は天気がいいですね」という意味です。",
+        "options": [
+          { "id": 1, "optionText": "今日は寒いですね" },
+          { "id": 2, "optionText": "今日は暑いですね" },
+          { "id": 3, "optionText": "今日は天気がいいですね" },
+          { "id": 4, "optionText": "今日は雨ですね" }
+        ],
+        "answer": 3
+      },
+      {
+        "questionId": 50,
+        "questionText": "'식사'의 의미로 알맞은 것은 무엇입니까?",
+        "explanation": "'식사'は「食事」です。",
+        "options": [
+          { "id": 1, "optionText": "勉強" },
+          { "id": 2, "optionText": "遊び" },
+          { "id": 3, "optionText": "食事" },
+          { "id": 4, "optionText": "読書" }
+        ],
+        "answer": 3
       }
     ]
   }

@@ -79,9 +79,10 @@ const submit = async () => {
   submitErrorMessage.value = ''
   const res = await withLoading(loading, () => userStore.login(userId.value, password.value))
   if (res && res.success && res.user) {
-      // success - navigate to redirect if provided
-      const redirect = (route.query.redirect as string) || '/'
-      router.push(redirect).catch(() => {})
+    // success - navigate to redirect from sessionStorage
+    const redirect = sessionStorage.getItem('loginRedirect') || '/'
+    sessionStorage.removeItem('loginRedirect') // cleanup
+    router.push(redirect).catch(() => {})
   } else {
     submitErrorMessage.value = 'ユーザーIDまたはパスワードが違います'
   }

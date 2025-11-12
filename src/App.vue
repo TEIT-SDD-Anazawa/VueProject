@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <NavigationDrawer v-model="drawer" @navigate="goAndClose" />
+    <NavigationDrawer v-if="!isLoginPage" v-model="drawer" @navigate="goAndClose" />
 
     <HeaderBar
       :auth="auth"
@@ -17,14 +17,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
-import { useRouter } from "vue-router";
+import { ref, computed, watch, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { useUserStore } from "@/stores/userStore";
 import NavigationDrawer from "@/components/NavigationDrawer.vue";
 import HeaderBar from "@/components/HeaderBar.vue";
 
 const router = useRouter();
+const route = useRoute();
 const userStore = useUserStore();
+
+// 初期化時に認証状態を復元
+onMounted(() => {
+  userStore.initializeAuth()
+})
 
 // Data
 // ==============================================================
@@ -35,6 +41,8 @@ const drawer = ref(false);
 // ==============================================================
 const auth = computed(() => !!userStore.user);
 const user = computed(() => userStore.user as { username?: string; name?: string } | null);
+/** ログインページかどうかの判定 */
+const isLoginPage = computed(() => route.name === 'Login');
 
 
 // Method

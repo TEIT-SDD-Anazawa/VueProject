@@ -3,48 +3,68 @@
     <h2>クイズへようこそ</h2>
     <p>カテゴリを選んで開始してください。</p>
 
-    <v-select
-      v-model="selectedCategory"
-      :items="categories"
-      item-title="category"
-      item-value="category"
-      label="カテゴリ"
-      dense
-    />
+    <div v-if="loading" class="text-center">
+      <v-progress-circular indeterminate color="primary" />
+      <p>クイズを読み込み中...</p>
+    </div>
 
-    <v-select
-      v-model="numQuestions"
-      :items="questionOptions"
-      label="問題数"
-      dense
-    />
+    <div v-else>
+      <v-select
+        v-model="selectedCategory"
+        :items="quizzes"
+        item-title="title"
+        item-value="id"
+        label="クイズを選択"
+        dense
+      />
 
-    <div style="margin-top:12px">
-      <v-btn color="primary" :disabled="!selectedCategory" @click="start">
-        開始
-      </v-btn>
+      <v-select
+        v-model="numQuestions"
+        :items="questionOptions"
+        label="問題数"
+        dense
+      />
+
+      <div style="margin-top:12px">
+        <v-btn color="primary" :disabled="!selectedCategory" @click="start">
+          開始
+        </v-btn>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, watch } from 'vue'
+
+interface Quiz {
+  id: string;
+  title: string;
+  description?: string;
+}
+
+interface Props {
+  quizzes: Quiz[];
+  loading: boolean;
+}
+
+const props = defineProps<Props>()
+
 const emit = defineEmits<{
   (e: 'start', payload: { category: string; numQuestions: number }): void
 }>()
-import { fetchQuizzes } from '@/api/quizApi'
 
 const selectedCategory = ref<string | null>(null)
 const numQuestions = ref<number>(5)
-const categories = ref<Array<any>>([])
 
 const questionOptions = [1, 2, 3, 5, 10]
 
-onMounted(async () => {
-  const data = await fetchQuizzes()
-  categories.value = data
-  if (data && data.length > 0) selectedCategory.value = data[0].category
-})
+// Auto-select first quiz when quizzes are loaded
+watch(() => props.quizzes, (newQuizzes) => {
+  if (newQuizzes && newQuizzes.length > 0 && !selectedCategory.value) {
+    selectedCategory.value = newQuizzes[0].id
+  }
+}, { immediate: true })
 
 const start = () => {
   if (!selectedCategory.value) return

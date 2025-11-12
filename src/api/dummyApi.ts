@@ -125,8 +125,15 @@ export { fetchUser };
 export async function fetchQuizzes() {
   // simulate latency
   await delay(300);
+  // map quizzes to a light-weight index used by the UI: { id, title, description }
+  // original `quizzes` structure contains { category, questions }
+  const mapped = (quizzes as any[]).map((q) => ({
+    id: q.category,
+    title: q.category,
+    description: q.description ?? "",
+  }));
   // return a deep copy to avoid accidental mutation by consumers
-  return JSON.parse(JSON.stringify(quizzes));
+  return JSON.parse(JSON.stringify(mapped));
 }
 
 export async function fetchQuizByCategory(category: string) {
@@ -137,5 +144,18 @@ export async function fetchQuizByCategory(category: string) {
 
 export async function fetchQuizQuestions(category: string) {
   const quiz = await fetchQuizByCategory(category);
-  return quiz ? quiz.questions : [];
+  if (!quiz) return [];
+  // Map the quiz's question objects to the shape expected by the store/components
+  const mapped = (quiz.questions || []).map((q: any) => ({
+    id: q.questionId,
+    quizId: quiz.category,
+    question: q.questionText,
+    // map options array of { id, optionText } to array of strings
+    options: Array.isArray(q.options) ? q.options.map((o: any) => o.optionText) : [],
+    // convert answer (1-based in JSON) to 0-based index
+    correctAnswer: (typeof q.answer === 'number') ? (q.answer - 1) : 0,
+    // include explanation if present
+    explanation: q.explanation ?? "",
+  }));
+  return mapped;
 }

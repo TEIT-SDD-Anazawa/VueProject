@@ -1,12 +1,25 @@
 <template>
   <v-navigation-drawer
     app
-    class="navigation-drawer"
+    class="navigation-drawer d-flex justify-space-between"
     temporary
     v-model="internal"
   >
     <!-- ヘッダー -->
     <v-toolbar flat>
+      <div class="drawer-user">
+        <template v-if="isAuth">
+          <v-avatar size="40" class="mr-3">
+            <v-icon icon="mdi-account-circle" />
+          </v-avatar>
+          <div class="user-info">
+            <div class="user-name">{{ userStore.user?.name }}</div>
+          </div>
+        </template>
+        <template v-else>
+          <v-btn text @click="onLogin">ログイン</v-btn>
+        </template>
+      </div>
       <v-spacer />
       <v-btn @click="close" aria-label="閉じる" icon>
         <v-icon aria-hidden="true" icon="mdi-close" />
@@ -55,6 +68,15 @@
         @click="selectWithAuth('/settings')"
       />
     </v-list>
+
+    <!-- フッター（ログアウト） -->
+    <template v-if="isAuth" #append>
+      <div class="pa-4">
+        <v-btn color="error" variant="outlined" @click="onLogout" block>
+          <v-icon left icon="mdi-logout" /> ログアウト
+        </v-btn>
+      </div>
+    </template>
   </v-navigation-drawer>
 </template>
 
@@ -102,7 +124,7 @@ const selectWithAuth = (path: string) => {
   if (!isAuth.value) {
     // navigate to login page
     internal.value = false;
-    router.push({ name: 'Login' }).catch(() => {})
+    router.push({ name: "Login" }).catch(() => {});
     return;
   }
   select(path);
@@ -111,6 +133,19 @@ const selectWithAuth = (path: string) => {
 /** ナビゲーションバーを閉じる */
 const close = () => {
   internal.value = false;
+};
+
+const onLogout = () => {
+  internal.value = false;
+  try {
+    userStore.logout();
+  } catch (e) {}
+  router.push("/").catch(() => {});
+};
+
+const onLogin = () => {
+  internal.value = false;
+  router.push({ name: 'Login' }).catch(() => {});
 };
 </script>
 
@@ -123,7 +158,7 @@ const close = () => {
   box-sizing: border-box;
   padding-left: 8px;
   padding-right: 8px;
-  margin: 6px 6px;
+  margin: 12px 6px;
   border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: 6px;
 }
@@ -131,5 +166,18 @@ const close = () => {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.drawer-user {
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+}
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+.user-name {
+  font-weight: 600;
 }
 </style>

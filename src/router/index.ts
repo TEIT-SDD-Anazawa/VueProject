@@ -12,7 +12,7 @@ const routes = [
   { path: '/about', name: 'About', component: About },
   { path: '/login', name: 'Login', component: Login },
   { path: '/quiz', name: 'Quiz', component: Quiz },
-  { path: '/settings', name: 'Settings', component: Settings, meta: { requiresAuth: true } }
+  { path: '/settings', name: 'Settings', component: Settings }
 ]
 
 const router = createRouter({
@@ -21,13 +21,22 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.meta && (to.meta as any).requiresAuth) {
-    const userStore = useUserStore();
-    if (!userStore.user) {
-      next({ name: 'Login', query: { redirect: to.fullPath } })
-      return
-    }
+  const userStore = useUserStore()
+  
+  // If not authenticated and not already on Login page, redirect to Login
+  if (!userStore.user && to.name !== 'Login') {
+    // Store redirect path for after login
+    sessionStorage.setItem('loginRedirect', to.fullPath)
+    next({ name: 'Login' })
+    return
   }
+  
+  // If user is already logged in and trying to go to login page, redirect to home
+  if (to.name === 'Login' && userStore.user) {
+    next({ name: 'Home' })
+    return
+  }
+  
   next()
 })
 
